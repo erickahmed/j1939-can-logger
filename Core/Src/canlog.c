@@ -76,8 +76,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     // TODO: manage the case of FIFO overflow
     if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rxHeader, data) != HAL_OK) return;
 
+    if (rxHeader.DLC > 8) return;
+
     if (rxHeader.IDE == CAN_ID_EXT) message.id = rxHeader.ExtId;
     else message.id = rxHeader.StdId;
+
     message.dlc = rxHeader.DLC;
     message.isExtended = (rxHeader.IDE == CAN_ID_EXT);
     message.source = (hcan->Instance == CAN1) ? 1 : 2;
