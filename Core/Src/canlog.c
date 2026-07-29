@@ -142,13 +142,8 @@ void vLEDHeartbeat(void *argument)
   {
     uint32_t notification = osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 
-    if (notification & 0x01)
-    {
-      HAL_GPIO_WritePin(led->port, led->pin, GPIO_PIN_SET);
-      osDelay(LED_BLINK_MS);
-      HAL_GPIO_WritePin(led->port, led->pin, GPIO_PIN_RESET);
-    }
-  }
+    if (notification & 0x01) HAL_GPIO_WritePin(led->port, led->pin, GPIO_PIN_SET);
+    else HAL_GPIO_WritePin(led->port, led->pin, GPIO_PIN_RESET);
 }
 /* END vLEDHeartbeat */
 /* USER CODE END FunctionPrototypes */
