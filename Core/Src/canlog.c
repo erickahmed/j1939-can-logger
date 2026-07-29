@@ -123,12 +123,7 @@ void vCANListener(void *argument)
 
   for (;;)
   {
-    if (osMessageQueueGet(queue, &message, NULL, 1000) == osOK)
-    {
-          // J1939 decoding
-
-      osMessageQueuePut(xUARTQueue, &message, 0U, 0U);
-    }
+    if (osMessageQueueGet(queue, &message, NULL, 1000) == osOK) osMessageQueuePut(xUARTQueue, &message, 0U, 0U);
   }
 }
 /* END vCANListener */
