@@ -73,7 +73,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     osMessageQueueId_t queue;
     osThreadId_t led_task;
 
-    // TODO: manage the case of FIFO overflow
+    if (__HAL_CAN_GET_FLAG(hcan, CAN_FLAG_FOV0) != RESET) __HAL_CAN_CLEAR_FLAG(hcan, CAN_FLAG_FOV0);
+
     if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rxHeader, data) != HAL_OK) return;
 
     if (rxHeader.DLC > 8) return;
